@@ -11,9 +11,18 @@ export const storeApi = createApi({
         url: '/products',
       }),
     }),
+
+    getSearchedProducts: builder.query({
+      query: (searchedText) => ({
+        url: '/products',
+        params: {
+          query: searchedText
+        }
+      }),
+    }),
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllProductsQuery } = storeApi
+export const { useGetAllProductsQuery, useGetSearchedProductsQuery } = storeApi

@@ -1,3 +1,6 @@
+# additional notes of work
+done upto details for each product, search isnt working and needs to be fixed, scrollbar has been changed from index.css
+
 # Assignment Title: E-commerce Development Task
 
 ## Assignment Description:
