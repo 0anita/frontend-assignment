@@ -35,7 +35,11 @@ const Header = () => {
    
     {
       name: 'Home',
-      path: '/product/'
+      path: '/products/'
+    }, 
+    {
+      name: 'Coming Soon',
+      path: '/comingsoon/'
     }
   ]
 
