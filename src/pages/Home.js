@@ -1,29 +1,20 @@
-import React from 'react'
-import { useGetAllProductsQuery } from '../Features/storeApi'
-import ViewProducts from '../components/ViewProducts'
-import Search from '../components/Search'
-import SearchResults from './SearchResults'
-import Sidebar from '../components/Sidebar'
+import React, { useContext } from 'react';
+import ViewProducts from '../components/ViewProducts';
 
-const Home = () => {
-  const { isLoading, isError, error, data } = useGetAllProductsQuery()
-  console.log(data)
-
+const Home = ({ isLoading, isError, error, data }) => {
 
   return (
     <div className='md:flex'>
 
-      <Sidebar
-        data={data}
-      />
       <ViewProducts
-        sdata={data}
+        data={data}
         isLoading={isLoading}
         isError={isError}
         error={error}
       />
-    </div>
-  )
-}
 
-export default Home
+    </div>
+  );
+};
+
+export default Home;

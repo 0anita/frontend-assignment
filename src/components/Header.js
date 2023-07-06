@@ -1,22 +1,18 @@
-import React, { useState } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { IoMenu } from 'react-icons/io5'
-import { RxCross2 } from 'react-icons/rx'
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { IoMenu } from 'react-icons/io5';
+import { RxCross2 } from 'react-icons/rx';
 import { useFormik } from 'formik';
-import { HiSearch } from "react-icons/hi";
+import { HiSearch } from 'react-icons/hi';
+import { SearchContext } from '../contexts/SearchContext';
 import SearchResults from '../pages/SearchResults';
+import ViewProducts from './ViewProducts';
 
-const Header = () => {
-
-  const [isOpen, setIsOpen] = React.useState(false);
-
+const Header = ({ data }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const { filteredData, setFilteredData } = useContext(SearchContext);
 
-  const [isScrolled, setIsScrolled] = React.useState(false);
-
-
-
-  // formikj for search 
   const nav = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -24,28 +20,31 @@ const Header = () => {
     },
     onSubmit: (val, { resetForm }) => {
       setSearchValue(val.search);
-      nav(`/search/${val.search}`);
+      nav(`/searchResults/${val.search}`);
       resetForm();
-    }
+    },
   });
 
-
+  useEffect(() => {
+    const filtered = data?.filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [searchValue, data, setFilteredData]);
 
   const navs = [
-   
     {
       name: 'Home',
-      path: '/products/'
-    }, 
+      path: '/products/',
+    },
     {
-      name: 'Coming Soon',
-      path: '/comingsoon/'
-    }
-  ]
+      name: 'Go to Cart',
+      path: '/cart/',
+    },
+  ];
 
   const toggle = () => setIsOpen(!isOpen);
   const location = useLocation();
-
 
   return (
     <div>
@@ -247,18 +246,13 @@ const Header = () => {
               src={process.env.PUBLIC_URL + '/assets/shopping-bag-stock-photography-woman-shopping-girl-shopping-0de7bc67f751c0173f69ea3d123c0efa.png'} alt="" />
           </div>
         </div>
-        <div>
-          {location.pathname === '/search' && (
-            <SearchResults search={searchValue} />
-          )}
 
-
-        </div>
 
 
 
 
       </div >
+
     </div >
 
 

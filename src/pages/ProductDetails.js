@@ -1,10 +1,11 @@
 import { Rating } from '@mui/material';
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const Detail = () => {
   const { state } = useLocation();
   const [isImageOpen, setIsImageOpen] = useState(false);
+  const { title } = useParams();
 
   const handleOpenImage = () => {
     setIsImageOpen(true);
@@ -63,7 +64,7 @@ const Detail = () => {
             <p className='text-2xl font-bold'>${state.price}</p>
           </div>
           <div className='flex gap-20 lg:gap-56 items-center'>
-            <span className='font-bold text-xl py-1'>Rating: </span>            
+            <span className='font-bold text-xl py-1'>Rating: </span>
             <Rating name="read-only" value={state.rating.rate} readOnly />
           </div>
           <div className='grid grid-cols-2 w-full'>

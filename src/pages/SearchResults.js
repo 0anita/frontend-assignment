@@ -1,14 +1,12 @@
-import React from 'react';
-import Search from '../components/Search';
+import React, { useContext } from 'react';
+import ViewProducts from '../components/ViewProducts';
+import { SearchContext } from '../contexts/SearchContext';
 
-const SearchResults = ({ data, search }) => {
-  console.log(search)
+const SearchResults = ({ data }) => {
+  const { filteredData } = useContext(SearchContext);
 
   return (
-    <div>
-      <h1>Search Results</h1>
-      <Search search={search} products={data} />
-    </div>
+    <ViewProducts sdata={filteredData} data={data} isLoading={false} />
   );
 };
 
