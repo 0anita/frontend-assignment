@@ -3,9 +3,49 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 
-
 .bg-custom-small-banner {
-  background-image: url('/public/assets/shopping-bag-stock-photography-woman-shopping-girl-shopping-0de7bc67f751c0173f69ea3d123c0efa.png');
+  background: linear-gradient(0deg, rgba(0, 0, 150, 0.3), rgba(200, 0, 100, 0.1)), url(../public/assets/woman-gea886c4b4_1920 for small.png);
+  background-position: center center;
+  /* Adjust the pixels here */
+}
+
+.text-color-primary {
+  color: #185f8f;
+}
+
+.text-color-secondary {
+  color: rgb(24, 91, 168);
+}
+
+
+
+.text-color-tertiary {
+  color: white;
+}
+
+.text-custom-black {
+  color: rgb(53, 52, 52)
+}
+
+.bg-custom-black {
+  background-color: rgb(32, 32, 32);
+}
+
+.bg-color-primary {
+  background-color: #185f8f;
+}
+
+
+.bg-color-secondary {
+  background-color: #4d9fd6;
+}
+
+.primary-color {}
+
+
+.bg-custom-big-banner {
+  background: linear-gradient(0deg, rgba(0, 0, 150, 0), rgba(200, 0, 100, 0)), url(../public/assets/shopping-bag-stock-photography-woman-shopping-girl-shopping-0de7bc67f751c0173f69ea3d123c0efa.png);
+  background-position: center center;
 }
 
 html {

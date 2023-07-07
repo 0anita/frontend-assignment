@@ -26,16 +26,26 @@ const Header = ({ data }) => {
   });
 
   useEffect(() => {
-    const filtered = data?.filter((item) =>
-      item.title.toLowerCase().includes(searchValue.toLowerCase())
-    );
+    const filtered = data?.filter((item) => {
+      const title = item.title.toLowerCase();
+      const isMatch = title.includes(searchValue.toLowerCase());
+
+      if (searchValue.toLowerCase() === 'men' && title.includes('woman')) {
+        return false; // Exclude items containing "woman" if searchValue is "men"
+      }
+
+      return isMatch;
+    });
+
     setFilteredData(filtered);
   }, [searchValue, data, setFilteredData]);
 
+
   const navs = [
+
     {
       name: 'Home',
-      path: '/products/',
+      path: '/',
     },
     {
       name: 'Go to Cart',
@@ -47,11 +57,11 @@ const Header = ({ data }) => {
   const location = useLocation();
 
   return (
-    <div>
+    <div className='bg-slate-800'>
       {/* OnlineStore with menu toggle on small screen and full on big screen*/}
-      <div className='p-5 flex md:scale-100 scale-125  md:justify-between items-baseline md:items-center md:gap-6 gap-0 justify-center mx-10 '>
+      <div className='p-5 flex duration-200 md:scale-100 scale-125  md:justify-between items-baseline md:items-center md:gap-6 gap-0 justify-center mx-10 xl:mx-40 '>
         <div>
-          <NavLink to='/' className='text-4xl font-bold text-red-600 duration-300 hover:duration-300 hover:text-black'>OnlineStore</NavLink>
+          <NavLink to='/' className='text-4xl font-bold text-color-tertiary duration-300 hover:duration-300 hover:text-custom-black'>OnlineStore</NavLink>
         </div>
 
 
@@ -60,7 +70,7 @@ const Header = ({ data }) => {
         <div>
           <button
             onClick={toggle}
-            className='px-7 hover:scale-110 md:hidden duration-300'
+            className='px-7 hover:scale-110 md:hidden text-white duration-300'
           >
             {isOpen ? (
               <RxCross2 size={30} className='hover:bg-slate-400 my-1' />
@@ -77,12 +87,12 @@ const Header = ({ data }) => {
 
 
         {/* big navbar  */}
-        <div className='md:flex hidden gap-10  text-xl justify-end'>
+        <div className='xl:grid md:flex xl:w-96 grid-cols-2 hidden gap-10  text-xl justify-end'>
           {navs.map(nav => (
             <NavLink
               to={nav.path}
               key={nav.name}
-              className={`hover: font - bold hover: text - red - 600 duration - 100 ${location.pathname === nav.path ? 'font-bold' : ''} `}
+              className={`hover:font-bold hover:text-slate-600 duration-100 ${location.pathname === nav.path ? 'text-color-tertiary font-bold' : ' text-white'} `}
             >
               {nav.name}
             </NavLink>
@@ -94,12 +104,12 @@ const Header = ({ data }) => {
 
       {/* small navbar OPEN */}
       {isOpen && (
-        <div className='flex flex-col space-y-5 m-5  text-center   md:hidden'>
+        <div className='flex flex-col space-y-5 m-5 duration-200 text-center  pb-10 md:hidden'>
           {navs.map(nav => (
             <NavLink
               to={nav.path}
               key={nav.name}
-              className={`hover: scale - 125  text - center hover: font - bold hover: text - red - 600 ${location.pathname === nav.path ? 'font-bold' : ''} `}
+              className={`hover:font-bold hover:text-slate-600 duration-100 ${location.pathname === nav.path ? 'text-color-tertiary font-bold' : ' text-white'} `}
             >
               {nav.name}
             </NavLink>
@@ -119,13 +129,13 @@ const Header = ({ data }) => {
                 onFocus={(e) => e.target.placeholder = ""}
                 onBlur={(e) => e.target.placeholder = 'Search products'}
                 placeholder='Search products'
-                className='w-full outline-none border rounded-l-lg text-center py-1 text-black'
+                className='w-full outline-none border rounded-l-lg text-center py-1 text-custom-black'
               />
               <button
                 type='submit'
-                className='bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-r-lg'
+                className='bg-color-primary hover:bg-color-secondary font-bold py-2 px-4 rounded-r-lg'
               >
-                <HiSearch size={30} className='text-white' />
+                <HiSearch size={30} className='' />
               </button>
             </div>
           </form>
@@ -134,18 +144,20 @@ const Header = ({ data }) => {
       )}
 
       {/* hero banner for small screen */}
-      <div className='bg-yellow-50 bg-contain bg-no-repeat text-center bg-right
-     pt-12   flex  justify-center md:hidden'>
+      <div className='bg-custom-small-banner bg-contain py-52 bg-no-repeat text-center bg-right backdrop-blur-lg flex items-center justify-center md:hidden'>
 
-        <div>
+
+        <div className=''>
           {/* search bar  small screen */}
           <form
-            className='justify-center items-center  py-2 w-full '
+            className=' rounded-md  justify-center items-center  py-2 w-full backdrop-blur-sm'
             onSubmit={formik.handleSubmit}>
 
-            <label htmlFor="search">
-              <p className='text-3xl'>Happy Shopping with </p>
-              <p className='text-6xl font-bold text-red-600'>OnlineStore</p>
+            <label
+              className=''
+              htmlFor="search">
+              <p className='text-3xl text-white'>Happy Shopping with </p>
+              <p className='text-6xl font-bold text-color-primary'>OnlineStore</p>
 
             </label>
             <div className='max-w-lg  xl:w-96 lg:w-80 md:w-72 pt-8   flex'>
@@ -157,21 +169,21 @@ const Header = ({ data }) => {
                 onFocus={(e) => e.target.placeholder = ""}
                 onBlur={(e) => e.target.placeholder = 'Search products'}
                 placeholder='Search products'
-                className='w-full outline-none border rounded-l-lg text-center py-0 text-black'
+                className='w-full outline-none border rounded-l-lg text-center py-0 text-custom-black'
               />
               <button
                 type='submit'
-                className='bg-red-600 hover:bg-red-700 text-white font-bold py-0 px-4 rounded-r-lg'
+                className='bg-color-primary hover:bg-color-secondary   font-bold py-0 px-4 rounded-r-lg'
               >
-                <HiSearch size={30} className='text-white' />
+                <HiSearch size={30} className='' />
               </button>
 
 
             </div>
 
           </form>
-          <div className='flex py-5'>
-            <div>
+          <div className='flex  text-white py-5'>
+            <div className='bg-black bg-opacity-5 p-2 backdrop-blur-sm'>
               <p className=''>Explore a vast selection of products. Easy Returns.
                 <br />
                 Buy Now! Top brands for Phones and Electronics.
@@ -179,7 +191,7 @@ const Header = ({ data }) => {
               <p>
                 Latest trends in Fashion.
               </p>
-              <p className='text-slate-500 flex justify-center py-2 '>with Free Shipping available*
+              <p className='text-color-tertiary text-sm flex justify-center py-2 '>with Free Shipping available*
               </p>
             </div>
           </div>
@@ -190,9 +202,9 @@ const Header = ({ data }) => {
 
 
       {/* hero banner for big */}
-      <div className='bg-yellow-50'>
-        <div className='xl:px-52 
-          lg:px-44 md:px-28 hidden items-center md:flex overflow-hidden py-9'>
+      <div className='bg-custom-big-banner b'>
+        <div className='xl:p-52 
+          lg:p-44 md:p-28 hidden items-center md:flex overflow-hidden py-9'>
           <div className='z-20'>
             {/* search bar  big screen */}
             <form
@@ -200,8 +212,8 @@ const Header = ({ data }) => {
               onSubmit={formik.handleSubmit}>
 
               <label htmlFor="search">
-                <p className='text-3xl lg:text-5xl xl:text-6xl'>Happy Shopping with </p>
-                <p className='text-4xl lg:text-6xl xl:text-8xl font-bold text-red-600'>OnlineStore</p>
+                <p className='text-3xl lg:text-5xl  xl:text-6xl'>Happy Shopping with </p>
+                <p className='text-4xl bg-white bg-opacity-5 backdrop-blur-sm lg:text-6xl xl:text-8xl font-bold text-color-primary '>OnlineStore</p>
 
               </label>
               <div className='max-w-lg  xl:w-96 lg:w-80 md:w-72 pt-9 flex'>
@@ -213,11 +225,11 @@ const Header = ({ data }) => {
                   onFocus={(e) => e.target.placeholder = ""}
                   onBlur={(e) => e.target.placeholder = 'Search products'}
                   placeholder='Search products'
-                  className='w-full outline-none border rounded-l-lg text-center py-0 text-black'
+                  className='w-full outline-none border rounded-l-lg text-center py-0 text-custom-black'
                 />
                 <button
                   type='submit'
-                  className='bg-red-600 hover:bg-red-700 text-white font-bold py-0 px-4 rounded-r-lg'
+                  className='bg-color-primary hover:bg-color-secondary  font-bold py-0 px-4 rounded-r-lg'
                 >
                   <HiSearch size={30} className='text-white' />
                 </button>
@@ -225,7 +237,7 @@ const Header = ({ data }) => {
               </div>
 
             </form>
-            <div className='flex py-5 w-3/3'>
+            <div className='flex  py-5 w-3/3'>
               <div>
                 <p className=''>Explore a vast selection of products.
                   <br />
@@ -235,14 +247,14 @@ const Header = ({ data }) => {
                   <br />
                   Latest trends in Fashion.
                 </p>
-                <p className='text-slate-500 flex'>with Free Shipping available*
+                <p className='text-yellow-900 text-sm pt-10 flex'>with Free Shipping available*
                 </p>
               </div>
             </div>
           </div>
-          <div className='h-96 w-auto z-0 lg:block flex items-center'>
+          <div className='h-auto w-full z-0 lg:block flex items-center'>
             <img
-              className='object-cover scale-150 xl:-mt-[60px] '
+              className='object-cover transform -scale-x-100 hidden xl:-mt-[60px] '
               src={process.env.PUBLIC_URL + '/assets/shopping-bag-stock-photography-woman-shopping-girl-shopping-0de7bc67f751c0173f69ea3d123c0efa.png'} alt="" />
           </div>
         </div>

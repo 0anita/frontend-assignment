@@ -1,38 +1,34 @@
+import { addToLocal, getLocal } from './localStorage';
 import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  items: getLocal() || [],
+};
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: {
-    carts: [],
-  },
+  initialState,
   reducers: {
-    addToCarts: (state, action) => {
-      state.carts.push(action.payload);
-    },
-    increaseQuantity: (state, action) => {
-      const { id } = action.payload;
-      const product = state.carts.find((item) => item.id === id);
-      if (product) {
-        product.quantity++;
+    addItem: (state, action) => {
+      const { item, quantity } = action.payload;
+      const existingItem = state.items.find((cartItem) => cartItem.item.id === item.id);
+
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        state.items.push({ id: item.id, item, quantity });
       }
-    },
-    decreaseQuantity: (state, action) => {
-      const { id } = action.payload;
-      const product = state.carts.find((item) => item.id === id);
-      if (product && product.quantity > 0) {
-        product.quantity--;
-      }
+      addToLocal(state.items);
     },
 
-    updateCart: (state, action) => {
-      const { id, quantity } = action.payload;
-      const product = state.carts.find((item) => item.id === id);
-      if (product) {
-        product.quantity = quantity;
-      }
+    updateItem: (state, action) => {
+      const updatedItems = action.payload;
+
+      state.items = updatedItems.filter((item) => item.quantity > 0);
+      addToLocal(state.items);
     },
   },
 });
 
-export const { addToCarts, increaseQuantity, decreaseQuantity, removeFormCart, updateCart } = cartSlice.actions;
+export const { addItem, updateItem } = cartSlice.actions;
 export default cartSlice.reducer;

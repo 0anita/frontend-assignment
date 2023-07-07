@@ -6,9 +6,13 @@ const Footer = () => {
 
   const navs = [
     {
-      name: 'Popular',
-      path: '/movie/popular'
-    }
+      name: 'Home',
+      path: '/',
+    },
+    {
+      name: 'Go to Cart',
+      path: '/cart/',
+    },
   ]
 
   const location = useLocation();
@@ -22,7 +26,7 @@ const Footer = () => {
           <NavLink
             to={nav.path}
             key={nav.name}
-            className={`hover:font-bold hover:text-red-600 duration-100 ${location.pathname === nav.path ? 'font-bold' : ''}`}
+            className={`hover:font-bold hover:text-color-primary duration-100 ${location.pathname === nav.path ? 'font-bold' : ''}`}
           >
             {nav.name}
           </NavLink>
