@@ -1,7 +1,18 @@
-# additional notes of work
-done upto details for each product, search isnt working and needs to be fixed, scrollbar has been changed from index.css
+# Install Dependencies
+Npm i or npm install
 
-# Assignment Title: E-commerce Development Task
+# Running app
+npm start
+
+# Technologies used
+Reactjs, React Context, RTK query,
+
+
+==========================================================================
+
+#Assignment Title: E-commerce Development Task
+ 
+### Task Description
 
 ## Assignment Description:
 
