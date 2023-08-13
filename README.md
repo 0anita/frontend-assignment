@@ -1,5 +1,5 @@
 # Install Dependencies
-Npm i or npm install
+npm install --force
 
 # Running app
 npm start
